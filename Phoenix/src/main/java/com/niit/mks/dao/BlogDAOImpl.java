@@ -2,6 +2,7 @@ package com.niit.mks.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,7 +25,7 @@ public class BlogDAOImpl implements BlogDAO {
 	public boolean saveOrUpdate(Blog blog) {
 		
 		try{
-			sessionFactory.getCurrentSession().saveOrUpdate(blog);
+			sessionFactory.openSession().saveOrUpdate(blog);
 			return true;
 		}catch(Exception e)
 		{
@@ -34,7 +35,7 @@ public class BlogDAOImpl implements BlogDAO {
 
 	public boolean delete(Blog blog) {
 		try {
-		sessionFactory.getCurrentSession().delete(blog);
+		sessionFactory.openSession().delete(blog);
 		return true;
 		}catch(Exception e)
 		{
@@ -44,7 +45,7 @@ public class BlogDAOImpl implements BlogDAO {
 
 	public Blog get(int blogId) {
 	
-		return (Blog)sessionFactory.getCurrentSession().get(Blog.class,blogId);
+		return (Blog)sessionFactory.openSession().get(Blog.class,blogId);
 		
 	}
 
@@ -55,7 +56,7 @@ public class BlogDAOImpl implements BlogDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<Blog> list() {
-		return sessionFactory.getCurrentSession().createQuery("From Blog").list();
+		return sessionFactory.openSession().createQuery("From Blog").list();
 	}
 
 	public List<Blog> getblogsByStatus(String status)
@@ -65,8 +66,12 @@ public class BlogDAOImpl implements BlogDAO {
 	}
 
 	public List<Blog> getTopBlogs(int n) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "FROM Blog WHERE status = 'APPROVE' ORDER BY postDate DESC";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setFirstResult(1);
+		query.setMaxResults(n);
+		return query.list();
+	}
 	}
 
-}
+

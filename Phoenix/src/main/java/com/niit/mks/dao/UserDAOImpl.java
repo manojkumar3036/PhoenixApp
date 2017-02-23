@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.niit.mks.model.User;
 
 @Repository("userDAO")
-@Transactional
+
 public class UserDAOImpl implements UserDAO {
 
 	@Autowired
@@ -24,6 +24,7 @@ public class UserDAOImpl implements UserDAO {
 		this.sessionFactory = sessionFactory;
 	}
 
+	@Transactional
 	public Boolean saveOrUpdate(User user) {
 
 		try {
@@ -33,7 +34,7 @@ public class UserDAOImpl implements UserDAO {
 			return false;
 		}
 	}
-
+	@Transactional
 	public Boolean delete(User user) {
 		try {
 			sessionFactory.getCurrentSession().delete(user);
@@ -42,21 +43,25 @@ public class UserDAOImpl implements UserDAO {
 			return false;
 		}
 	}
-
+	@Transactional
 	public User getByUsername(String username) {
 		try {
-			Query query = (Query) sessionFactory.getCurrentSession().get(User.class, username);
-			User user = (User) query.setParameter("username", username);
-			return user;
+			
+			
+			String selectUser = "From User where username = :username";
+			Query query = (Query) sessionFactory.getCurrentSession().createQuery(selectUser);
+			query.setParameter("username", username);
+			return (User) query.uniqueResult();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
-
+	@Transactional
 	public User getById(int userId) {
 		return (User) sessionFactory.getCurrentSession().get(User.class, userId);
 	}
-
+	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<User> list() {
 		
@@ -72,14 +77,27 @@ public class UserDAOImpl implements UserDAO {
 		return false;
 	}
 
+	@Transactional
 	public User validate(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		String username = user.getUsername();
+		String password = user.getPassword();
+		String hql = "from User where username = '" +username+"' and password = '"+password+"'";
+		Query query = (Query)sessionFactory.getCurrentSession().createQuery(hql);
+		try {
+			
+			return (User) query.uniqueResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public List<User> getTopUsers(int n) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "FROM User WHERE status = 'APPROVE' ORDER BY userId DESC";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setFirstResult(1);
+		query.setMaxResults(n);
+		return query.list();
 	}
 
 }

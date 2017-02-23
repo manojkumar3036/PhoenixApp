@@ -13,9 +13,12 @@ import com.niit.mks.model.JobApplied;
 @Transactional
 public class JobAppliedDAOImpl implements JobAppliedDAO {
 
+	
 	@Autowired
+	SessionFactory sessionFactory;
+
 	public boolean saveOrUpdate(JobApplied jobApplied) {
-		SessionFactory sessionFactory;
+		
 		// TODO Auto-generated method stub
 		return false;
 	}

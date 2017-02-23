@@ -23,7 +23,7 @@ public class BlogCommentDAOImpl implements BlogCommentDAO {
 	}
 	public boolean saveOrUpdate(BlogComment blogComment) {
 		try{
-			sessionFactory.getCurrentSession().saveOrUpdate(blogComment);
+			sessionFactory.openSession().saveOrUpdate(blogComment);
 			return true;
 		}catch(Exception e)
 		{
@@ -33,7 +33,7 @@ public class BlogCommentDAOImpl implements BlogCommentDAO {
 
 	public boolean delete(BlogComment blogComment) {
 		try {
-			sessionFactory.getCurrentSession().delete(blogComment);
+			sessionFactory.openSession().delete(blogComment);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -42,7 +42,7 @@ public class BlogCommentDAOImpl implements BlogCommentDAO {
 
 	public BlogComment get(int id) {
 		
-		return (BlogComment)sessionFactory.getCurrentSession().get(BlogComment.class,id);
+		return (BlogComment)sessionFactory.openSession().get(BlogComment.class,id);
 	}
 
 	public List<BlogComment> list(int blogId) {

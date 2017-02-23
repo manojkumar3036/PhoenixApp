@@ -102,6 +102,8 @@ public class UserController {
 		user.setUsername(currentUser.getUsername());
 		user.setPassword(currentUser.getPassword());
 		user = userDAO.validate(user);
+		
+		
 		if (user == null) {
 			user = new User();
 			user.setErrorCode("404");
