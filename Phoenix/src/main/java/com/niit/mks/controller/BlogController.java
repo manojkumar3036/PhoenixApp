@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.niit.mks.dao.BlogDAO;
 import com.niit.mks.dao.UserDAO;
 import com.niit.mks.model.Blog;
-import com.niit.mks.model.BlogListModel;
+import com.niit.mks.model.blogListModel;
 import com.niit.mks.model.User;
 
 @RestController
-
 public class BlogController {
 
 	@Autowired
@@ -40,14 +39,14 @@ public class BlogController {
 	}
 
 	@RequestMapping(value = "/blog/list", method = RequestMethod.GET)
-	public ResponseEntity<List<BlogListModel>> listApprovedblogs() {
+	public ResponseEntity<List<blogListModel>> listApprovedblogs() {
 		List<Blog> blogs = blogDAO.getblogsByStatus("APPROVE");
-		List<BlogListModel> bloglist = new ArrayList<BlogListModel>();
+		List<blogListModel> bloglist = new ArrayList<blogListModel>();
 
-		BlogListModel blogModel = null;
+		blogListModel blogModel = null;
 
 		for (Blog b : blogs) {
-			blogModel = new BlogListModel();
+			blogModel = new blogListModel();
 			blogModel.setBlog(b);
 			blogModel.setFirstName(userDAO.getById(b.getUserId()).getFirstName());
 			blogModel.setLastname(userDAO.getById(b.getUserId()).getLastName());
@@ -62,18 +61,18 @@ public class BlogController {
 			blog.setErrorMessage("No blogs present.");
 			blogs.add(blog);
 		}
-		return new ResponseEntity<List<BlogListModel>>(bloglist, HttpStatus.OK);
+		return new ResponseEntity<List<blogListModel>>(bloglist, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/blog/myBlogs/{userId}", method = RequestMethod.GET)
-	public ResponseEntity<List<BlogListModel>> listMyblogs(@PathVariable("userId") int userId) {
+	public ResponseEntity<List<blogListModel>> listMyblogs(@PathVariable("userId") int userId) {
 		List<Blog> blogs = blogDAO.getByUserId(userId);
-		List<BlogListModel> bloglist = new ArrayList<BlogListModel>();
+		List<blogListModel> bloglist = new ArrayList<blogListModel>();
 
-		BlogListModel blogModel = null;
+		blogListModel blogModel = null;
 
 		for (Blog b : blogs) {
-			blogModel = new BlogListModel();
+			blogModel = new blogListModel();
 			blogModel.setBlog(b);
 			blogModel.setFirstName(userDAO.getById(b.getUserId()).getFirstName());
 			blogModel.setLastname(userDAO.getById(b.getUserId()).getLastName());
@@ -88,14 +87,14 @@ public class BlogController {
 			blog.setErrorMessage("No blogs present.");
 			blogs.add(blog);
 		}
-		return new ResponseEntity<List<BlogListModel>>(bloglist, HttpStatus.OK);
+		return new ResponseEntity<List<blogListModel>>(bloglist, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/blog/get/{blogId}", method = RequestMethod.GET)
-	public ResponseEntity<BlogListModel> getblog(@PathVariable("blogId") int blogId) {
+	public ResponseEntity<blogListModel> getblog(@PathVariable("blogId") int blogId) {
 		System.out.println("Fetching blog");
 
-		BlogListModel blogModel = new BlogListModel();
+		blogListModel blogModel = new blogListModel();
 		blog = blogDAO.get(blogId);
 		blogModel.setBlog(blog);
 		blogModel.setFirstName(userDAO.getById(blog.getUserId()).getFirstName());
@@ -107,7 +106,7 @@ public class BlogController {
 			blog.setErrorCode("404");
 			blog.setErrorMessage("blog does not exist.");
 		}
-		return new ResponseEntity<BlogListModel>(blogModel, HttpStatus.OK);
+		return new ResponseEntity<blogListModel>(blogModel, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/blog/create", method = RequestMethod.POST)
@@ -199,14 +198,14 @@ public class BlogController {
 	}
 
 	@RequestMapping(value = "/latestBlogs", method = RequestMethod.GET)
-	public ResponseEntity<List<BlogListModel>> listLatestblogs() {
+	public ResponseEntity<List<blogListModel>> listLatestblogs() {
 		List<Blog> blogs = blogDAO.getTopBlogs(3);
-		List<BlogListModel> bloglist = new ArrayList<BlogListModel>();
+		List<blogListModel> bloglist = new ArrayList<blogListModel>();
 
-		BlogListModel blogModel = null;
+		blogListModel blogModel = null;
 
 		for (Blog b : blogs) {
-			blogModel = new BlogListModel();
+			blogModel = new blogListModel();
 			blogModel.setBlog(b);
 			blogModel.setFirstName(userDAO.getById(b.getUserId()).getFirstName());
 			blogModel.setLastname(userDAO.getById(b.getUserId()).getLastName());
@@ -221,7 +220,7 @@ public class BlogController {
 			blog.setErrorMessage("No blogs present.");
 			blogs.add(blog);
 		}
-		return new ResponseEntity<List<BlogListModel>>(bloglist, HttpStatus.OK);
+		return new ResponseEntity<List<blogListModel>>(bloglist, HttpStatus.OK);
 	}
 
 }

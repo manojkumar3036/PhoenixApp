@@ -21,11 +21,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Component
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "blogId")
-
 public class Blog extends BaseDomain implements Serializable {
 
-	
-	/**
+/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;

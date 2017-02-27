@@ -19,7 +19,7 @@ public class EmailService {
 	private JavaMailSender mailSender;
 
 	// email name which is not similar to the username
-	private static String from = "CommunEX";
+	private static String from = "Phoenix";
 
 	/**
 	 * approvedUserMessage method will be called using emailService that can be
@@ -41,7 +41,7 @@ public class EmailService {
 			// set up your HTML message here
 			StringBuilder htmlMsg = new StringBuilder();
 
-			htmlMsg.append("<h1>Welcome " + user.getFirstName() + " " + user.getLastName() + " on CommunEX!</h1>");
+			htmlMsg.append("<h1>Welcome " + user.getFirstName() + " " + user.getLastName() + " on Phoenix!</h1>");
 			htmlMsg.append("<p>Your account has been activated!</p><br/>");
 			htmlMsg.append("<p>Thanks for joining with us!</p><br/>");
 
@@ -50,7 +50,7 @@ public class EmailService {
 
 			// set the subject and recipient of the email
 			helper.setTo(user.getEmailId());
-			helper.setSubject("WELCOME TO CommunEX");
+			helper.setSubject("WELCOME TO Phoenix");
 			helper.setFrom(from);
 
 			// send the message

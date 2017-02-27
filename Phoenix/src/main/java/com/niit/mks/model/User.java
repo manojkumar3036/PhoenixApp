@@ -3,6 +3,8 @@ package com.niit.mks.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -20,6 +22,8 @@ public class User extends BaseDomain implements Serializable {
 	private static final long serialVersionUID = 1L;
 	// Attributes
 	@Id
+
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int userId;
 	private String firstName;
 	private String lastName;

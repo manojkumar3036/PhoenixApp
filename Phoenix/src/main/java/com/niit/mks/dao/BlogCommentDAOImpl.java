@@ -2,6 +2,7 @@ package com.niit.mks.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -10,45 +11,56 @@ import org.springframework.transaction.annotation.Transactional;
 import com.niit.mks.model.BlogComment;
 
 @Repository("BlogCommentDAO")
-@Transactional
+
 public class BlogCommentDAOImpl implements BlogCommentDAO {
 
-	@Autowired
-	
+	@Autowired	
 	SessionFactory sessionFactory;
 	
 	public BlogCommentDAOImpl(SessionFactory sessionFactory)
 	{
 		this.sessionFactory=sessionFactory;
 	}
+	@Transactional
 	public boolean saveOrUpdate(BlogComment blogComment) {
-		try{
-			sessionFactory.openSession().saveOrUpdate(blogComment);
-			return true;
-		}catch(Exception e)
-		{
-			return false;
-		}
-	}
-
-	public boolean delete(BlogComment blogComment) {
 		try {
-			sessionFactory.openSession().delete(blogComment);
+			sessionFactory.getCurrentSession().saveOrUpdate(blogComment);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
+	@Transactional
+	public boolean delete(BlogComment blogComment) {
+		try {
+			sessionFactory.getCurrentSession().delete(blogComment);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
 
+	@Transactional
 	public BlogComment get(int id) {
-		
-		return (BlogComment)sessionFactory.openSession().get(BlogComment.class,id);
+		String hql = "from BlogComment where id = :id";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql).setParameter("id", id);
+		try {
+			return (BlogComment) query.uniqueResult();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
+	@Transactional
 	public List<BlogComment> list(int blogId) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "from BlogComment where blogId = :blogId";
+		 Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		 query.setParameter("blogId",blogId);
+		return query.list();
 	}
-
 	
 }

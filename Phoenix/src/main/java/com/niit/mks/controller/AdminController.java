@@ -16,14 +16,13 @@ import com.niit.mks.dao.BlogDAO;
 import com.niit.mks.dao.FriendDAO;
 import com.niit.mks.dao.UserDAO;
 import com.niit.mks.model.Blog;
-import com.niit.mks.model.BlogListModel;
+import com.niit.mks.model.blogListModel;
 import com.niit.mks.model.Friend;
 import com.niit.mks.model.User;
 import com.niit.mks.service.EmailService;
 
 @RestController
-@CrossOrigin(origins = "http://127.0.0.1:8887")
-public class AdminController {
+public class adminController {
 
 	@Autowired
 	Blog blog;
@@ -45,21 +44,20 @@ public class AdminController {
 
 	@Autowired
 	private EmailService emailService;
-	
-	public AdminController()
-	{
+
+	public adminController() {
 		System.out.println("Instantiating AdminController");
 	}
 
 	@RequestMapping(value = "/admin/blogs", method = RequestMethod.GET)
-	public ResponseEntity<List<BlogListModel>> listAllblogs() {
+	public ResponseEntity<List<blogListModel>> listAllblogs() {
 		List<Blog> blogs = blogDAO.getblogsByStatus("PENDING");
-		List<BlogListModel> bloglist = new ArrayList<BlogListModel>();
+		List<blogListModel> bloglist = new ArrayList<blogListModel>();
 
-		BlogListModel blogModel = null;
+		blogListModel blogModel = null;
 
 		for (Blog b : blogs) {
-			blogModel = new BlogListModel();
+			blogModel = new blogListModel();
 			blogModel.setBlog(b);
 			blogModel.setFirstName(userDAO.getById(b.getUserId()).getFirstName());
 			blogModel.setLastname(userDAO.getById(b.getUserId()).getLastName());
@@ -73,18 +71,18 @@ public class AdminController {
 			blog.setErrorMessage("No blogs present.");
 			blogs.add(blog);
 		}
-		return new ResponseEntity<List<BlogListModel>>(bloglist, HttpStatus.OK);
+		return new ResponseEntity<List<blogListModel>>(bloglist, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/admin/approvedBlogs", method = RequestMethod.GET)
-	public ResponseEntity<List<BlogListModel>> listApprovedblogs() {
+	public ResponseEntity<List<blogListModel>> listApprovedblogs() {
 		List<Blog> blogs = blogDAO.getblogsByStatus("APPROVE");
-		List<BlogListModel> bloglist = new ArrayList<BlogListModel>();
+		List<blogListModel> bloglist = new ArrayList<blogListModel>();
 
-		BlogListModel blogModel = null;
+		blogListModel blogModel = null;
 
 		for (Blog b : blogs) {
-			blogModel = new BlogListModel();
+			blogModel = new blogListModel();
 			blogModel.setBlog(b);
 			blogModel.setFirstName(userDAO.getById(b.getUserId()).getFirstName());
 			blogModel.setLastname(userDAO.getById(b.getUserId()).getLastName());
@@ -98,18 +96,18 @@ public class AdminController {
 			blog.setErrorMessage("No blogs present.");
 			blogs.add(blog);
 		}
-		return new ResponseEntity<List<BlogListModel>>(bloglist, HttpStatus.OK);
+		return new ResponseEntity<List<blogListModel>>(bloglist, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/admin/rejectedBlogs", method = RequestMethod.GET)
-	public ResponseEntity<List<BlogListModel>> listRejectedblogs() {
+	public ResponseEntity<List<blogListModel>> listRejectedblogs() {
 		List<Blog> blogs = blogDAO.getblogsByStatus("REJECT");
-		List<BlogListModel> bloglist = new ArrayList<BlogListModel>();
+		List<blogListModel> bloglist = new ArrayList<blogListModel>();
 
-		BlogListModel blogModel = null;
+		blogListModel blogModel = null;
 
 		for (Blog b : blogs) {
-			blogModel = new BlogListModel();
+			blogModel = new blogListModel();
 			blogModel.setBlog(b);
 			blogModel.setFirstName(userDAO.getById(b.getUserId()).getFirstName());
 			blogModel.setLastname(userDAO.getById(b.getUserId()).getLastName());
@@ -123,7 +121,7 @@ public class AdminController {
 			blog.setErrorMessage("No blogs present.");
 			blogs.add(blog);
 		}
-		return new ResponseEntity<List<BlogListModel>>(bloglist, HttpStatus.OK);
+		return new ResponseEntity<List<blogListModel>>(bloglist, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/admin/approveBlog/{blogId}", method = RequestMethod.PUT)

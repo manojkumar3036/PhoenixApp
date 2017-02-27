@@ -134,6 +134,7 @@ public class ForumController {
 		return new ResponseEntity<List<ForumListModel>>(forumlist, HttpStatus.OK);
 	}
 
+	@SuppressWarnings("unused")
 	@RequestMapping(value = "/forum/get/{forumId}", method = RequestMethod.GET)
 	public ResponseEntity<ForumListModel> getforum(@PathVariable("forumId") int forumId) {
 		System.out.println("Fetching forum");
@@ -151,6 +152,7 @@ public class ForumController {
 		}
 		return new ResponseEntity<ForumListModel>(forumListModel, HttpStatus.OK);
 	}
+
 
 	@RequestMapping(value = "/forum/create", method = RequestMethod.POST)
 	public ResponseEntity<Forum> createforum(@RequestBody Forum currentForum) {

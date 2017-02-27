@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.niit.mks.model.Blog;
 
 @Repository("blogDAO")
-@Transactional
 public class BlogDAOImpl implements BlogDAO {
 	
 	@Autowired
@@ -22,49 +21,68 @@ public class BlogDAOImpl implements BlogDAO {
 		this.sessionFactory=sessionFactory;
 	}
 
+	@Transactional
 	public boolean saveOrUpdate(Blog blog) {
 		
 		try{
-			sessionFactory.openSession().saveOrUpdate(blog);
+			sessionFactory.getCurrentSession().saveOrUpdate(blog);
 			return true;
 		}catch(Exception e)
 		{
+			e.printStackTrace();
 			return false;
 		}
 	}
 
+	@Transactional
 	public boolean delete(Blog blog) {
 		try {
-		sessionFactory.openSession().delete(blog);
+		sessionFactory.getCurrentSession().delete(blog);
 		return true;
 		}catch(Exception e)
 		{
+			e.printStackTrace();
 			return false;
 		}
 	}
-
+	@Transactional
 	public Blog get(int blogId) {
 	
-		return (Blog)sessionFactory.openSession().get(Blog.class,blogId);
+		String hql = "from Blog where blogId = :blogId";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql).setParameter("blogId", blogId);
+		try {
+			return (Blog) query.uniqueResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 		
 	}
 
+	@Transactional
+
 	public List<Blog> getByUserId(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "from Blog where userId = '"+userId+"' and status = 'APPROVE'";
+		return sessionFactory.getCurrentSession().createQuery(hql).list();
 	}
 
-	@SuppressWarnings("unchecked")
+	@Transactional
+
 	public List<Blog> list() {
 		return sessionFactory.openSession().createQuery("From Blog").list();
 	}
+	@Transactional
 
+	
 	public List<Blog> getblogsByStatus(String status)
 	{
-		return null;
+		String hql = "from Blog where status = '"+status+"'";
+		return sessionFactory.getCurrentSession().createQuery(hql).list();
 		
 	}
+	@Transactional
 
+	
 	public List<Blog> getTopBlogs(int n) {
 		String hql = "FROM Blog WHERE status = 'APPROVE' ORDER BY postDate DESC";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);

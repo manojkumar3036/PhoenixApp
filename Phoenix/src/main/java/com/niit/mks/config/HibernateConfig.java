@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
-@ComponentScan({"com.niit.mks"})
+@ComponentScan({"com.niit.mks.model"})
 @EnableTransactionManagement
 @EnableWebMvc
 public class HibernateConfig {
@@ -26,7 +26,7 @@ public class HibernateConfig {
 	 * 
 	 */
 
-	private final static String JDBC_URL = "jdbc:h2:tcp://localhost/~/test";
+	private final static String JDBC_URL = "jdbc:h2:tcp://localhost/~/testdemo";
 	private final static String JDBC_DRIVER_CLASS = "org.h2.Driver";
 	private final static String JDBC_USERNAME = "sa";
 	private final static String JDBC_PASSWORD = "";

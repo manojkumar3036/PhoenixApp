@@ -1,6 +1,6 @@
 package com.niit.mks.model;
 
-public class BlogListModel {
+public class blogListModel {
 
 	Blog blog;
 

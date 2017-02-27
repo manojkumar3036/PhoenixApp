@@ -2,6 +2,7 @@ package com.niit.mks.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,29 +16,56 @@ public class JobDAOImpl implements JobDAO {
 
 	@Autowired
 	SessionFactory sessionFactory;
+	public JobDAOImpl(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	@Transactional
 	public boolean saveOrUpdate(Job job) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			sessionFactory.getCurrentSession().saveOrUpdate(job);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
 	}
 
+	@Transactional
 	public boolean delete(Job job) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			sessionFactory.getCurrentSession().delete(job);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
+	@Transactional
 	public Job get(int jobId) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "from Job where jobId = :jobId";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql).setParameter("jobId", jobId);
+		try {
+			return (Job) query.uniqueResult();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
+	@Transactional
 	public List<Job> list() {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "from Job";
+		return sessionFactory.getCurrentSession().createQuery(hql).list();
 	}
-
-	public Job getByJobProfile(String jobProfile) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	@Transactional
+	public Job getByJobProfile(String jobProfile){
+		String hql = "from Job where jobProfile = :jobProfile";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql).setParameter("jobProfile", jobProfile);
+		try {
+			return (Job) query.uniqueResult();
+		} catch (Exception e) {
+			return null;
+		}
 	}
-
 }
