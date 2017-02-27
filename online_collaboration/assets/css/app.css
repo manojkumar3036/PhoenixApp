@@ -12,7 +12,7 @@
 }
 
 .body {
-    background-image: url("collaboration3.png");
+    background-image: url("../img/bodybg.jpg");
 		height:100%;
 		min-height:100%;
 }
@@ -173,4 +173,29 @@ border-radius: 6px;
 .mkRegistrationBtn:disabled{
   background-color:#D64541 !important;
   color:gray !important;
+}
+.panel-primary .panel-heading{
+background-color: #D64541 !important;
+background-image: linear-gradient(to bottom, #D64541 0, #D64541 100%) !important;
+border-color: #D64541 !important;
+}
+.user-panel{
+border-color: #D64541 !important;
+}
+.menubar .img-responsive{
+max-width: 69% !important;
+margin-top: 10px !important;
+}
+.teal-text .fa-circle{
+  color:green !important;
+  margin-right:10px;
+}
+blockquote{
+  border-left:none !important;
+}
+nav ul a:hover{
+    color:white !important;
+}
+nav ul a:active{
+    color:white !important;
 }

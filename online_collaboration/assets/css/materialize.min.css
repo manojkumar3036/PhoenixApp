@@ -3911,7 +3911,8 @@ nav .brand-logo {
     display: inline-block;
     font-size: 2.1rem;
     padding: 0;
-    white-space: nowrap
+    white-space: nowrap;
+    left:17px;
 }
 
 nav .brand-logo.center {
@@ -6796,7 +6797,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .side-nav a {
-    color: rgba(0, 0, 0, 0.87);
+    color: white;
     display: block;
     font-size: 14px;
     font-weight: 500;
@@ -6847,7 +6848,7 @@ input[type=range]:focus::-ms-fill-upper {
     line-height: 48px;
     margin: 0 32px 0 0;
     width: 24px;
-    color: rgba(0, 0, 0, 0.54)
+    color: white;
 }
 
 .side-nav .divider {
