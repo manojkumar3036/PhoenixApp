@@ -5938,7 +5938,8 @@ textarea.materialize-textarea+label:after {
 .input-field .prefix ~ .autocomplete-content {
     margin-left: 3rem;
     width: 92%;
-    width: calc(100% - 3rem)
+    width: calc(100% - 3rem);
+    color:white;
 }
 
 .input-field .prefix ~ label {
@@ -5995,6 +5996,7 @@ textarea.materialize-textarea+label:after {
 }
 
 textarea {
+    color:white !important;
     width: 100%;
     height: 3rem;
     background-color: transparent
